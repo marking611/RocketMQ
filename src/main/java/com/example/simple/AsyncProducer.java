@@ -16,7 +16,7 @@ public class AsyncProducer {
         DefaultMQProducer producer = new DefaultMQProducer("ExampleProducerGroup");
         //Launch the instance.
         producer.start();
-        producer.setRetryTimesWhenSendAsyncFailed(0);
+        producer.setRetryTimesWhenSendAsyncFailed(0); //重试
         for (int i = 0; i < 100; i++) {
             final int index = i;
             //Create a message instance, specifying topic, tag and message body.

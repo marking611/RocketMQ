@@ -7,6 +7,7 @@ import com.alibaba.rocketmq.client.consumer.listener.MessageListenerConcurrently
 import com.alibaba.rocketmq.common.message.MessageExt;
 
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -39,7 +40,8 @@ public class PushConsumer {
          * 订阅指定的topic下的所有消息
          * 注意：一个consumer对象可以订阅多个topic
          */
-        consumer.subscribe("topic2","*");
+        consumer.subscribe("topic2", "*");
+        consumer.subscribe("topicOrder", "*");
 
         /**
          * 默认msgs里只有一条消息，可以通过设置consumeMessageBatchMaxSize参数来批量接收消息
@@ -49,23 +51,24 @@ public class PushConsumer {
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-                System.out.println(Thread.currentThread().getName()+" Receive New Message:"+list.size());
+                System.out.println(Thread.currentThread().getName() + " Receive New Message:" + list.size());
                 list.forEach(message -> {
+                    System.out.println("------------------" + LocalDateTime.now() + "------------------");
                     //获取body内容
                     System.out.println(new String(message.getBody(), Charset.defaultCharset()));
 
-                    if (message.getTopic().equals("topic1")){
+                    if (message.getTopic().equals("topic1")) {
                         System.out.println("This is topic1");
                         //执行topic1的消费逻辑
                         String tags = message.getTags();
-                        if (tags != null && tags.equals("TagA")){
+                        if (tags != null && tags.equals("TagA")) {
                             System.out.println("This is TagA");
-                        }else if (tags != null && tags.equals("TagC")){
+                        } else if (tags != null && tags.equals("TagC")) {
                             System.out.println("This is TagC");
-                        }else if (tags != null && tags.equals("TagD")){
+                        } else if (tags != null && tags.equals("TagD")) {
                             System.out.println("This is TagD");
                         }
-                    }else if (message.getTopic().equals("topic2")){
+                    } else if (message.getTopic().equals("topic2")) {
                         System.out.println("This is topic2");
                     }
                 });
