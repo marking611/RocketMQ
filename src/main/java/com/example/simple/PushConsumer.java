@@ -28,13 +28,14 @@ public class PushConsumer {
          */
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer();
         consumer.setConsumerGroup("push");
-        consumer.setNamesrvAddr("192.168.38.71:9876");
+        consumer.setNamesrvAddr("192.168.33.190:9876");
         consumer.setInstanceName("Consumer");
 
         /**
          * 订阅指定的topic下的tags分别等于TagA或TagC或者TagD
          */
         consumer.subscribe("topic1", "TagA || TagC || TagD");
+        consumer.subscribe("Topic1", "*");
 
         /**
          * 订阅指定的topic下的所有消息

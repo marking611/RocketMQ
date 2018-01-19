@@ -27,7 +27,7 @@ public class SyncProducer {
         DefaultMQProducer producer = new DefaultMQProducer("sync");
 
         //默认情况下，一台服务器只能启动一个Producer或Consumer实例，所以如果需要在一台服务器启动多个实例，需要设置实例的名称
-        producer.setNamesrvAddr("192.168.38.71:9876");
+        producer.setNamesrvAddr("192.168.33.190:9876");
         producer.setInstanceName("Producer");
 
         /**
